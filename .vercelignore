@@ -1,0 +1,16 @@
+.git/
+.vercel/
+node_modules/
+frontend/node_modules/
+target/
+frontend/dist/
+coverage/
+cache/
+artifacts/
+assets/
+*.mp4
+*.png
+*.jpg
+*.jpeg
+*.webp
+test/
