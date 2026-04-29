@@ -254,15 +254,29 @@ After a successful main-branch workflow run, GitHub should show the repository s
 7. Confirm the dashboard updates, the recent action list refreshes, and the public event feed shows the new contract event.
 8. Use the transaction link to inspect the write on Stellar Expert.
 
+## Demo Video
+
+Watch the Ecomania demo video:
+
+https://drive.google.com/file/d/1fyh44vwBPg8KkTM3u7AbpuhR0Jc8XqEj/view?usp=sharing
+
 ## Screenshots
 
-Current captures:
+### Desktop Impact Console
 
-- Desktop dashboard: `UI SS.png`
-- Mobile dashboard: `mobile SS.png`
-- Contract verification: `test.png`
+![Ecomania desktop impact console](./UI%20SS.png)
 
-After pushing to `main` and letting the workflow succeed, capture fresh GitHub Actions and Deployments screenshots from the Ecomania repository if your submission requires visual CI/CD evidence.
+### Mobile Responsive View
+
+![Ecomania mobile responsive view](./mobile%20SS.png)
+
+### GitHub Actions CI/CD
+
+![Ecomania CI/CD workflow screenshot](./ci%20cd%20ss.png)
+
+### Contract Test Verification
+
+![Ecomania contract test verification](./test.png)
 
 ## Verification Checklist
 
