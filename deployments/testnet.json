@@ -1,8 +1,12 @@
 {
   "contractName": "Ecomania",
-  "contractId": "CC5VYCATHI4E55ZWUVYJ3M4M3S3ESRQT6A3YU67CRIS5PTQINGSSZAGP",
+  "contractId": "CBSNANIBENMM6LHK3TAN5CNAHBLCG56YUC4LEOWNQ3FAVDCAOVJPYF56",
   "network": "testnet",
   "sourceAccount": "alice",
   "alias": "eco_mania",
-  "deployedAt": "2026-04-29T14:54:37.542Z"
+  "deployedAt": "2026-04-29T15:14:42.979Z",
+  "wasmHash": "2cdc4c6ede278398704ff4c28bb51b5429a103c47b14c742cef33dbe3a1bcc4f",
+  "deployTransaction": "17c0ce20ebe8e69a195834e7040ea6f62d240a236ddca392dd4590a996d33652",
+  "contractExplorer": "https://lab.stellar.org/r/testnet/contract/CBSNANIBENMM6LHK3TAN5CNAHBLCG56YUC4LEOWNQ3FAVDCAOVJPYF56",
+  "transactionExplorer": "https://stellar.expert/explorer/testnet/tx/17c0ce20ebe8e69a195834e7040ea6f62d240a236ddca392dd4590a996d33652"
 }
