@@ -100,7 +100,7 @@ STELLAR_NETWORK=testnet
 STELLAR_CONTRACT_ALIAS=eco_mania
 VITE_STELLAR_RPC_URL=https://soroban-testnet.stellar.org
 VITE_STELLAR_NETWORK_PASSPHRASE=Test SDF Network ; September 2015
-VITE_CONTRACT_ID=CBSNANIBENMM6LHK3TAN5CNAHBLCG56YUC4LEOWNQ3FAVDCAOVJPYF56
+VITE_CONTRACT_ID=CC3I3RHEQ6OOHYWYXUPUUGFOU4MRJEGEIFULJ4UJ3EUE5FATDBAHQ3TM
 ```
 
 Start the frontend:
@@ -177,14 +177,14 @@ For hosted environments, set `VITE_CONTRACT_ID`, `VITE_STELLAR_RPC_URL`, and `VI
 
 Current testnet contract:
 
-- Contract ID: `CBSNANIBENMM6LHK3TAN5CNAHBLCG56YUC4LEOWNQ3FAVDCAOVJPYF56`
+- Contract ID: `CC3I3RHEQ6OOHYWYXUPUUGFOU4MRJEGEIFULJ4UJ3EUE5FATDBAHQ3TM`
 - Contract alias: `eco_mania`
 - Source identity: `alice`
 - WASM hash: `2cdc4c6ede278398704ff4c28bb51b5429a103c47b14c742cef33dbe3a1bcc4f`
-- Deploy transaction: `17c0ce20ebe8e69a195834e7040ea6f62d240a236ddca392dd4590a996d33652`
-- Deployed at: `2026-04-29T15:14:42.979Z`
-- Contract explorer: `https://lab.stellar.org/r/testnet/contract/CBSNANIBENMM6LHK3TAN5CNAHBLCG56YUC4LEOWNQ3FAVDCAOVJPYF56`
-- Transaction explorer: `https://stellar.expert/explorer/testnet/tx/17c0ce20ebe8e69a195834e7040ea6f62d240a236ddca392dd4590a996d33652`
+- Deploy transaction: `4d47c7f0ecdd2c0f0ce379c2386690acfc2f945b18a0c1f1ccda0b1dce19c754`
+- Deployed at: `2026-04-29T15:26:26.144Z`
+- Contract explorer: `https://lab.stellar.org/r/testnet/contract/CC3I3RHEQ6OOHYWYXUPUUGFOU4MRJEGEIFULJ4UJ3EUE5FATDBAHQ3TM`
+- Transaction explorer: `https://stellar.expert/explorer/testnet/tx/4d47c7f0ecdd2c0f0ce379c2386690acfc2f945b18a0c1f1ccda0b1dce19c754`
 
 ## Vercel Deployment
 

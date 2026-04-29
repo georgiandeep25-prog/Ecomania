@@ -1,12 +1,12 @@
 {
   "contractName": "Ecomania",
-  "contractId": "CBSNANIBENMM6LHK3TAN5CNAHBLCG56YUC4LEOWNQ3FAVDCAOVJPYF56",
+  "contractId": "CC3I3RHEQ6OOHYWYXUPUUGFOU4MRJEGEIFULJ4UJ3EUE5FATDBAHQ3TM",
   "network": "testnet",
   "sourceAccount": "alice",
   "alias": "eco_mania",
-  "deployedAt": "2026-04-29T15:14:42.979Z",
+  "deployedAt": "2026-04-29T15:26:26.144Z",
   "wasmHash": "2cdc4c6ede278398704ff4c28bb51b5429a103c47b14c742cef33dbe3a1bcc4f",
-  "deployTransaction": "17c0ce20ebe8e69a195834e7040ea6f62d240a236ddca392dd4590a996d33652",
-  "contractExplorer": "https://lab.stellar.org/r/testnet/contract/CBSNANIBENMM6LHK3TAN5CNAHBLCG56YUC4LEOWNQ3FAVDCAOVJPYF56",
-  "transactionExplorer": "https://stellar.expert/explorer/testnet/tx/17c0ce20ebe8e69a195834e7040ea6f62d240a236ddca392dd4590a996d33652"
+  "deployTransaction": "4d47c7f0ecdd2c0f0ce379c2386690acfc2f945b18a0c1f1ccda0b1dce19c754",
+  "contractExplorer": "https://lab.stellar.org/r/testnet/contract/CC3I3RHEQ6OOHYWYXUPUUGFOU4MRJEGEIFULJ4UJ3EUE5FATDBAHQ3TM",
+  "transactionExplorer": "https://stellar.expert/explorer/testnet/tx/4d47c7f0ecdd2c0f0ce379c2386690acfc2f945b18a0c1f1ccda0b1dce19c754"
 }
