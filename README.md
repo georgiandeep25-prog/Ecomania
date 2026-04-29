@@ -4,7 +4,8 @@
 
 Ecomania is a Stellar Soroban mini-dApp for on-chain sustainability action tracking. Users connect a Freighter wallet, create a public eco profile, set a weekly eco-action goal, log planet-positive actions, build a climate-positive streak across days, and browse a live public activity feed sourced from recent Soroban contract events.
 
-Live app: `https://ecomania-five.vercel.app`
+Live app: `https://ecomani
+a-five.vercel.app`
 
 ## Overview
 
