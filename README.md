@@ -19,6 +19,21 @@ Ecomania keeps the original full-stack Soroban + React architecture and converts
 - Public activity feed powered by Soroban RPC `getEvents`
 - Responsive React interface that remains useful without a wallet connection
 
+## Submission Checklist
+
+- Public GitHub repository: `https://github.com/georgiandeep25-prog/Ecomania`
+- Complete README documentation: overview, architecture, contract methods, events, setup, deployment, CI/CD, screenshots, and verification steps are included below.
+- Minimum 8+ meaningful commits: this repository has more than 8 project commits on `main`.
+- Live demo link: `https://ecomania-five.vercel.app`
+- Demo video: `https://drive.google.com/file/d/1fyh44vwBPg8KkTM3u7AbpuhR0Jc8XqEj/view?usp=sharing`
+- Mobile responsive screenshot: [mobile SS.png](./mobile%20SS.png)
+- CI/CD pipeline badge: shown at the top of this README.
+- CI/CD pipeline screenshot: [ci cd ss.png](./ci%20cd%20ss.png)
+- Contract address: `CC3I3RHEQ6OOHYWYXUPUUGFOU4MRJEGEIFULJ4UJ3EUE5FATDBAHQ3TM`
+- Contract deployment transaction hash: `4d47c7f0ecdd2c0f0ce379c2386690acfc2f945b18a0c1f1ccda0b1dce19c754`
+- Inter-contract calls: not used; Ecomania is a single Soroban contract.
+- Token or pool address: not applicable; no custom token or liquidity pool was deployed.
+
 ## Architecture
 
 ```text
