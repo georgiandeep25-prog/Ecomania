@@ -50,30 +50,40 @@ const emptyTx = {
 
 function BrandMark() {
   return (
-    <div className="brand-mark" aria-hidden="true">
-      <span />
-    </div>
+    <svg className="logo-svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="leafGradient" x1="10" y1="10" x2="90" y2="90" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stopColor="#10B981" />
+          <stop offset="100%" stopColor="#34D399" />
+        </linearGradient>
+      </defs>
+      <path d="M50 10C50 10 20 40 20 65C20 81.5685 33.4315 95 50 95C66.5685 95 80 81.5685 80 65C80 40 50 10 50 10Z" stroke="url(#leafGradient)" strokeWidth="2" strokeLinecap="round"/>
+      <path d="M50 20C50 20 30 45 30 65C30 76.0457 38.9543 85 50 85C61.0457 85 70 76.0457 70 65C70 45 50 20 50 20Z" stroke="url(#leafGradient)" strokeWidth="2" strokeOpacity="0.6" strokeLinecap="round"/>
+      <line x1="50" y1="95" x2="50" y2="40" stroke="url(#leafGradient)" strokeWidth="1" strokeOpacity="0.4"/>
+    </svg>
   );
 }
 
 function Section({ eyebrow, title, children, className = "" }) {
   return (
-    <section className={`section ${className}`}>
-      <div className="section-title">
-        <p>{eyebrow}</p>
-        <h2>{title}</h2>
+    <section className={`glass-card ${className}`}>
+      <div className="section-content">
+        <div className="section-title">
+          <span className="kicker">{eyebrow}</span>
+          <h2>{title}</h2>
+        </div>
+        {children}
       </div>
-      {children}
     </section>
   );
 }
 
 function StatTile({ label, value, note, loading = false }) {
   return (
-    <article className="stat-tile">
-      <p>{label}</p>
-      <strong className={loading ? "skeleton skeleton-value" : ""}>{loading ? "" : value}</strong>
-      <span>{loading ? <i className="skeleton skeleton-line" /> : note}</span>
+    <article className="glass-card section-content">
+      <span className="kicker">{label}</span>
+      <h2 className={loading ? "skeleton skeleton-value" : ""}>{loading ? "" : value}</h2>
+      <span style={{color: 'var(--on-surface-variant)', fontSize: '14px', marginTop: '8px', display: 'block'}}>{loading ? <i className="skeleton skeleton-line" /> : note}</span>
     </article>
   );
 }
@@ -112,18 +122,18 @@ function ActivityFeed({ activities, loading, walletAccount }) {
         const ownActivity = walletAccount && activity.ecoUser === walletAccount;
 
         return (
-          <article className={`feed-item feed-${activity.accent}`} key={activity.id}>
-            <div className="feed-top">
-              <span>{activity.badge}</span>
-              <small>{ownActivity ? "Your wallet" : shortAddress(activity.ecoUser)}</small>
+          <article className="feed-item" key={activity.id}>
+            <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
+              <span className={`chip ${activity.accent === 'success' ? 'chip-success' : 'chip-info'}`}>{activity.badge}</span>
+              <small className="data-mono" style={{color: 'var(--on-surface-variant)'}}>{ownActivity ? "Your wallet" : shortAddress(activity.ecoUser)}</small>
             </div>
-            <h3>{activity.title}</h3>
-            <p>{activity.detail}</p>
-            <div className="feed-meta">
+            <h3 style={{fontSize: '16px', margin: '8px 0 4px'}}>{activity.title}</h3>
+            <p style={{margin: '0', color: 'var(--on-surface-variant)', fontSize: '14px'}}>{activity.detail}</p>
+            <div style={{display: 'flex', gap: '12px', marginTop: '8px', fontSize: '12px', color: 'var(--slate)'}}>
               <time>{formatDate(activity.timestamp)}</time>
               {activity.explorerLink ? (
-                <a href={activity.explorerLink} target="_blank" rel="noreferrer">
-                  tx
+                <a href={activity.explorerLink} target="_blank" rel="noreferrer" style={{color: 'var(--emerald)'}}>
+                  tx ↗
                 </a>
               ) : null}
             </div>
@@ -136,6 +146,7 @@ function ActivityFeed({ activities, loading, walletAccount }) {
 
 export default function App() {
   const queryClient = useQueryClient();
+  const [activeTab, setActiveTab] = useState("analytics");
   const [wallet, setWallet] = useState(emptyWallet);
   const [txState, setTxState] = useState(emptyTx);
   const [profileForm, setProfileForm] = useState({
@@ -463,247 +474,305 @@ export default function App() {
             : "Deploy the Ecomania contract and export the frontend config before using the app."));
 
   return (
-    <main className="app-shell">
-      <nav className="topbar">
+    <main className="app-shell animate-fade-in">
+      <nav className="topbar glass-card" style={{marginBottom: '32px', borderBottom: 'none'}}>
         <a className="brand" href="#impact">
           <BrandMark />
           <span>Ecomania</span>
         </a>
-        <div className="topbar-meta">
-          <span>{getNetworkLabel(configuredNetworkPassphrase)}</span>
+        <div style={{display: 'flex', gap: '16px', alignItems: 'center', color: 'var(--on-surface-variant)', fontSize: '14px'}}>
+          <span className="data-mono">{getNetworkLabel(configuredNetworkPassphrase)}</span>
           {contractExplorerLink ? (
-            <a href={contractExplorerLink} target="_blank" rel="noreferrer">
-              {shortAddress(configuredContractId)}
+            <a href={contractExplorerLink} target="_blank" rel="noreferrer" style={{color: 'var(--emerald)'}}>
+              {shortAddress(configuredContractId)} ↗
             </a>
           ) : (
             <span>No contract</span>
           )}
+          <button className="button button-connect" onClick={handleConnectWallet} disabled={wallet.isConnecting}>
+            {wallet.isConnecting ? "Connecting" : wallet.account ? "Wallet linked" : "Connect Freighter"}
+          </button>
         </div>
-        <button className="button button-connect" onClick={handleConnectWallet} disabled={wallet.isConnecting}>
-          {wallet.isConnecting ? "Connecting" : wallet.account ? "Wallet linked" : "Connect Freighter"}
-        </button>
       </nav>
 
-      <section className="hero" id="impact">
-        <div className="hero-copy">
-          <p className="kicker">Public climate ledger</p>
-          <h1>Track small green actions with on-chain proof.</h1>
-          <p className="lead">
-            Ecomania turns recycling, conservation, transit, and low-waste habits into a weekly
-            sustainability record on Stellar.
-          </p>
+      {liveStatusMessage && (
+        <div className="glass-card section-content" style={{marginBottom: '24px', borderLeft: '3px solid var(--emerald)'}}>
+          <span className="kicker">Live status</span>
+          <p style={{margin: 0}}>{liveStatusMessage}</p>
+          {txExplorerLink ? (
+            <a href={txExplorerLink} target="_blank" rel="noreferrer" style={{color: 'var(--emerald)', display: 'block', marginTop: '8px', fontSize: '14px'}}>
+              Inspect transaction ↗
+            </a>
+          ) : null}
         </div>
-        <aside className="impact-meter" aria-label="Weekly progress">
-          <div className="meter-ring" style={{ "--progress": `${weeklyProgress * 3.6}deg` }}>
-            <strong>{dashboard ? `${weeklyProgress}%` : "0%"}</strong>
-            <span>weekly goal</span>
-          </div>
-          <div>
-            <p>{dashboard?.displayName || "No eco profile yet"}</p>
-            <h2>{dashboard ? formatDayCount(dashboard.currentStreak) : "0 days"}</h2>
-            <span>climate streak</span>
-          </div>
-        </aside>
-      </section>
+      )}
 
-      <section className={`ledger-strip status-${txState.status}`}>
-        <div>
-          <span>Live status</span>
-          <p>{liveStatusMessage}</p>
-        </div>
-        {txExplorerLink ? (
-          <a href={txExplorerLink} target="_blank" rel="noreferrer">
-            Inspect transaction
-          </a>
-        ) : null}
-      </section>
-
-      <section className="stats-grid" aria-label="Ecomania dashboard metrics">
-        <StatTile
-          label="All actions"
-          value={dashboard ? formatActionCount(dashboard.totalActions) : "0 actions"}
-          note={dashboard ? `${dashboard.actionCount} ledger entries` : "Connect to create a profile"}
-          loading={dashboardQuery.isLoading}
-        />
-        <StatTile
-          label="This week"
-          value={dashboard ? formatActionCount(dashboard.actionsThisWeek) : "0 actions"}
-          note={
-            dashboard
-              ? `${formatActionCount(Math.max(dashboard.weeklyGoalActions - dashboard.actionsThisWeek, 0))} remaining`
-              : "Weekly target not set"
-          }
-          loading={dashboardQuery.isLoading}
-        />
-        <StatTile
-          label="Climate streak"
-          value={dashboard ? formatDayCount(dashboard.currentStreak) : "0 days"}
-          note={dashboard?.goalReachedThisWeek ? "Goal reached this week" : "One action keeps it alive"}
-          loading={dashboardQuery.isLoading}
-        />
-        <StatTile
-          label="Public feed"
-          value={`${activitySummary.eventCount} events`}
-          note={`${activitySummary.ecoUserCount} eco wallets observed`}
-          loading={activityQuery.isLoading}
-        />
-      </section>
-
-      {!hasContractConfig() ? (
-        <Section eyebrow="Setup" title="Deploy the sustainability contract" className="setup-section">
-          <div className="command-grid">
-            <code>stellar keys generate alice --network testnet --fund</code>
-            <code>npm run contract:build</code>
-            <code>STELLAR_CONTRACT_ALIAS=eco_mania npm run contract:deploy</code>
-            <code>npm run export:frontend</code>
-          </div>
-        </Section>
-      ) : null}
-
-      <div className="workspace">
-        <div className="action-column">
-          <Section eyebrow="Eco profile" title="Name your public climate record">
-            <form className="form-grid split-form" onSubmit={handleProfileSubmit}>
-              <label>
-                <span>Display name</span>
-                <input
-                  type="text"
-                  placeholder="Green Harbor"
-                  value={profileForm.displayName}
-                  onChange={(event) =>
-                    setProfileForm((current) => ({ ...current, displayName: event.target.value }))
-                  }
-                />
-              </label>
-              <label>
-                <span>Weekly eco goal</span>
-                <input
-                  type="number"
-                  min="1"
-                  max="500"
-                  step="1"
-                  value={profileForm.weeklyGoalActions}
-                  onChange={(event) =>
-                    setProfileForm((current) => ({
-                      ...current,
-                      weeklyGoalActions: event.target.value
-                    }))
-                  }
-                />
-              </label>
-              <button className="button button-primary" type="submit" disabled={anyMutationPending || !readyForWrites}>
-                {saveProfileMutation.isPending ? "Saving" : "Save profile"}
+      <div className="dashboard-grid">
+        <aside className="col-span-3 sidebar">
+          <div className="glass-card section-content">
+            <span className="kicker" style={{display: 'block', marginBottom: '16px'}}>Navigation</span>
+            <nav className="sidebar">
+              <button className={`nav-link ${activeTab === 'analytics' ? 'nav-link-active' : ''}`} onClick={() => setActiveTab('analytics')}>
+                Analytics
               </button>
-            </form>
-          </Section>
-
-          <Section eyebrow="Action cockpit" title="Log today’s planet-positive move">
-            <form className="form-grid split-form" onSubmit={handleActionSubmit}>
-              <label>
-                <span>Eco action type</span>
-                <select
-                  value={actionForm.actionType}
-                  onChange={(event) =>
-                    setActionForm((current) => ({ ...current, actionType: event.target.value }))
-                  }
-                >
-                  {actionTypeOptions.map((option) => (
-                    <option value={option} key={option}>
-                      {option}
-                    </option>
-                  ))}
-                </select>
-              </label>
-              <label>
-                <span>Action quantity</span>
-                <input
-                  type="number"
-                  min="1"
-                  max="100"
-                  step="1"
-                  value={actionForm.actionQuantity}
-                  onChange={(event) =>
-                    setActionForm((current) => ({
-                      ...current,
-                      actionQuantity: event.target.value
-                    }))
-                  }
-                />
-              </label>
-              <button className="button button-primary" type="submit" disabled={anyMutationPending || !readyForWrites || !dashboard}>
-                {logActionMutation.isPending ? "Logging" : "Log action"}
+              <button className={`nav-link ${activeTab === 'ledger' ? 'nav-link-active' : ''}`} onClick={() => setActiveTab('ledger')}>
+                Action Ledger
               </button>
-            </form>
-          </Section>
-
-          <Section eyebrow="Target" title="Rebalance the weekly goal">
-            <form className="goal-form" onSubmit={handleGoalSubmit}>
-              <label>
-                <span>New weekly target</span>
-                <input
-                  type="number"
-                  min="1"
-                  max="500"
-                  step="1"
-                  value={goalForm}
-                  onChange={(event) => setGoalForm(event.target.value)}
-                />
-              </label>
-              <button className="button button-secondary" type="submit" disabled={anyMutationPending || !readyForWrites || !dashboard}>
-                {updateGoalMutation.isPending ? "Updating" : "Update goal"}
+              <button className={`nav-link ${activeTab === 'registry' ? 'nav-link-active' : ''}`} onClick={() => setActiveTab('registry')}>
+                Entity Registry
               </button>
-            </form>
-          </Section>
-
-          <Section eyebrow="Wallet history" title="Latest confirmed actions">
-            {ecoActionsQuery.isLoading ? (
-              <ActivitySkeleton />
-            ) : ecoActionsQuery.data?.length ? (
-              <div className="history-list">
-                {ecoActionsQuery.data.map((action) => (
-                  <article className="history-item" key={action.id}>
-                    <div>
-                      <h3>{action.actionType}</h3>
-                      <p>{formatDate(action.timestamp)}</p>
-                    </div>
-                    <strong>{formatActionCount(action.actionQuantity)}</strong>
-                    <span>streak {action.streakAfterLog}</span>
-                  </article>
-                ))}
+              <button className={`nav-link ${activeTab === 'governance' ? 'nav-link-active' : ''}`} onClick={() => setActiveTab('governance')}>
+                Governance
+              </button>
+            </nav>
+          </div>
+          
+          <div className="glass-card section-content" style={{marginTop: '24px'}}>
+            <span className="kicker">Soroban pulse</span>
+            <div style={{display: 'flex', justifyContent: 'space-between', margin: '16px 0', paddingBottom: '16px', borderBottom: '1px solid var(--glass-border)'}}>
+              <div style={{textAlign: 'center'}}>
+                <strong style={{color: 'var(--emerald)', display: 'block', fontSize: '20px'}}>{activitySummary.actionEventCount}</strong>
+                <span className="kicker" style={{fontSize: '10px'}}>actions</span>
               </div>
-            ) : (
-              <p className="empty-state">
-                {dashboard
-                  ? "Your wallet history will appear after your first confirmed eco action."
-                  : "Connect Freighter and create an eco profile to load wallet history."}
-              </p>
-            )}
-          </Section>
-        </div>
-
-        <aside className="feed-column">
-          <Section eyebrow="Soroban pulse" title="Public activity">
-            <div className="feed-summary">
-              <span>{activitySummary.actionEventCount} actions</span>
-              <span>{activitySummary.goalReachedCount} goals reached</span>
-              <span>{activitySummary.ecoUserCount} wallets</span>
+              <div style={{textAlign: 'center', borderLeft: '1px solid var(--glass-border)', borderRight: '1px solid var(--glass-border)', padding: '0 16px'}}>
+                <strong style={{color: 'var(--emerald)', display: 'block', fontSize: '20px'}}>{activitySummary.goalReachedCount}</strong>
+                <span className="kicker" style={{fontSize: '10px'}}>goals</span>
+              </div>
+              <div style={{textAlign: 'center'}}>
+                <strong style={{color: 'var(--emerald)', display: 'block', fontSize: '20px'}}>{activitySummary.ecoUserCount}</strong>
+                <span className="kicker" style={{fontSize: '10px'}}>wallets</span>
+              </div>
             </div>
-            <ActivityFeed
-              activities={activityQuery.data}
-              loading={activityQuery.isLoading}
-              walletAccount={wallet.account}
-            />
-          </Section>
-
-          <Section eyebrow="How it works" title="A compact climate loop">
-            <ol className="flow-list">
-              <li>Connect Freighter on Stellar Testnet.</li>
-              <li>Create an eco profile and weekly target.</li>
-              <li>Log daily sustainability actions.</li>
-              <li>Watch streaks, weekly progress, and contract events update.</li>
-            </ol>
-          </Section>
+            <p style={{fontSize: '12px', color: 'var(--on-surface-variant)', margin: 0}}>Total public contract interactions observed on testnet.</p>
+          </div>
         </aside>
+
+        <div className="col-span-9" style={{display: 'flex', flexDirection: 'column', gap: '24px'}}>
+          
+          {activeTab === 'analytics' && (
+            <>
+              <div className="glass-card section-content" style={{
+                background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(9, 13, 10, 0.9) 100%)',
+                display: 'flex', flexDirection: 'column', gap: '16px'
+              }}>
+                <span className="kicker">Public climate ledger</span>
+                <h1>Track small green actions with on-chain proof.</h1>
+                <p style={{color: 'var(--on-surface-variant)', fontSize: '18px', maxWidth: '800px', margin: 0}}>
+                  Ecomania turns recycling, conservation, transit, and low-waste habits into a weekly
+                  sustainability record on Stellar.
+                </p>
+                
+                <div style={{display: 'flex', alignItems: 'center', gap: '16px', marginTop: '16px'}}>
+                  <div style={{flex: 1}}>
+                    <div style={{display: 'flex', justifyContent: 'space-between', marginBottom: '8px'}}>
+                      <span className="kicker">Weekly Progress</span>
+                      <span className="data-mono">{dashboard ? `${weeklyProgress}%` : "0%"}</span>
+                    </div>
+                    <div className="progress-bg">
+                      <div className="progress-fill" style={{width: `${weeklyProgress}%`}}></div>
+                    </div>
+                  </div>
+                  <div style={{background: 'var(--glass-bg)', padding: '12px 24px', borderRadius: '8px', border: '1px solid var(--glass-border)', textAlign: 'center'}}>
+                    <h2 style={{color: 'var(--emerald)', margin: '0 0 4px'}}>{dashboard ? formatDayCount(dashboard.currentStreak) : "0 days"}</h2>
+                    <span className="kicker" style={{margin: 0}}>Climate Streak</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="dashboard-grid" style={{marginTop: 0}}>
+                <div className="col-span-4"><StatTile
+                  label="All actions"
+                  value={dashboard ? formatActionCount(dashboard.totalActions) : "0 actions"}
+                  note={dashboard ? `${dashboard.actionCount} ledger entries` : "Connect to create a profile"}
+                  loading={dashboardQuery.isLoading}
+                /></div>
+                <div className="col-span-4"><StatTile
+                  label="This week"
+                  value={dashboard ? formatActionCount(dashboard.actionsThisWeek) : "0 actions"}
+                  note={
+                    dashboard
+                      ? `${formatActionCount(Math.max(dashboard.weeklyGoalActions - dashboard.actionsThisWeek, 0))} remaining`
+                      : "Weekly target not set"
+                  }
+                  loading={dashboardQuery.isLoading}
+                /></div>
+                <div className="col-span-4"><StatTile
+                  label="Public feed"
+                  value={`${activitySummary.eventCount} events`}
+                  note={`${activitySummary.ecoUserCount} eco wallets`}
+                  loading={activityQuery.isLoading}
+                /></div>
+              </div>
+            </>
+          )}
+
+          {activeTab === 'ledger' && (
+            <div className="dashboard-grid" style={{marginTop: 0}}>
+              <div className="col-span-6">
+                <Section eyebrow="Action cockpit" title="Log today’s planet-positive move">
+                  <form className="form-grid" onSubmit={handleActionSubmit} style={{gridTemplateColumns: '1fr', gap: '16px'}}>
+                    <label>
+                      <span>Eco action type</span>
+                      <select
+                        value={actionForm.actionType}
+                        onChange={(event) =>
+                          setActionForm((current) => ({ ...current, actionType: event.target.value }))
+                        }
+                      >
+                        {actionTypeOptions.map((option) => (
+                          <option value={option} key={option}>
+                            {option}
+                          </option>
+                        ))}
+                      </select>
+                    </label>
+                    <label>
+                      <span>Action quantity</span>
+                      <input
+                        type="number"
+                        min="1"
+                        max="100"
+                        step="1"
+                        value={actionForm.actionQuantity}
+                        onChange={(event) =>
+                          setActionForm((current) => ({
+                            ...current,
+                            actionQuantity: event.target.value
+                          }))
+                        }
+                      />
+                    </label>
+                    <button className="button button-primary" type="submit" disabled={anyMutationPending || !readyForWrites || !dashboard}>
+                      {logActionMutation.isPending ? "Logging..." : "Log action"}
+                    </button>
+                  </form>
+                </Section>
+                <Section eyebrow="Wallet history" title="Latest confirmed actions" className="margin-top-24" style={{marginTop: '24px'}}>
+                  {ecoActionsQuery.isLoading ? (
+                    <ActivitySkeleton />
+                  ) : ecoActionsQuery.data?.length ? (
+                    <div className="activity-stack">
+                      {ecoActionsQuery.data.map((action) => (
+                        <article className="feed-item" key={action.id} style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
+                          <div>
+                            <h3 style={{fontSize: '16px', margin: '0 0 4px'}}>{action.actionType}</h3>
+                            <p style={{margin: '0', color: 'var(--on-surface-variant)', fontSize: '14px'}}>{formatDate(action.timestamp)}</p>
+                          </div>
+                          <div style={{textAlign: 'right'}}>
+                            <strong style={{color: 'var(--emerald)', fontSize: '18px', display: 'block'}}>{formatActionCount(action.actionQuantity)}</strong>
+                            <span className="kicker" style={{margin: 0, fontSize: '10px'}}>streak {action.streakAfterLog}</span>
+                          </div>
+                        </article>
+                      ))}
+                    </div>
+                  ) : (
+                    <p className="empty-state">
+                      {dashboard
+                        ? "Your wallet history will appear after your first confirmed eco action."
+                        : "Connect Freighter and create an eco profile to load wallet history."}
+                    </p>
+                  )}
+                </Section>
+              </div>
+
+              <div className="col-span-6">
+                <Section eyebrow="Live stream" title="Public ledger events">
+                  <ActivityFeed
+                    activities={activityQuery.data}
+                    loading={activityQuery.isLoading}
+                    walletAccount={wallet.account}
+                  />
+                </Section>
+              </div>
+            </div>
+          )}
+
+          {activeTab === 'registry' && (
+            <Section eyebrow="Eco profile" title="Name your public climate record">
+              <form className="form-grid" onSubmit={handleProfileSubmit} style={{gridTemplateColumns: '1fr 1fr', alignItems: 'end'}}>
+                <label>
+                  <span>Display name</span>
+                  <input
+                    type="text"
+                    placeholder="Green Harbor"
+                    value={profileForm.displayName}
+                    onChange={(event) =>
+                      setProfileForm((current) => ({ ...current, displayName: event.target.value }))
+                    }
+                  />
+                </label>
+                <label>
+                  <span>Weekly eco goal</span>
+                  <input
+                    type="number"
+                    min="1"
+                    max="500"
+                    step="1"
+                    value={profileForm.weeklyGoalActions}
+                    onChange={(event) =>
+                      setProfileForm((current) => ({
+                        ...current,
+                        weeklyGoalActions: event.target.value
+                      }))
+                    }
+                  />
+                </label>
+                <button className="button button-primary" type="submit" disabled={anyMutationPending || !readyForWrites} style={{gridColumn: 'span 2'}}>
+                  {saveProfileMutation.isPending ? "Saving..." : "Save profile"}
+                </button>
+              </form>
+            </Section>
+          )}
+
+          {activeTab === 'governance' && (
+            <>
+              {!hasContractConfig() ? (
+                <Section eyebrow="Setup" title="Deploy the sustainability contract" style={{marginBottom: '24px'}}>
+                  <div style={{display: 'flex', flexDirection: 'column', gap: '8px', fontFamily: 'monospace', background: 'var(--surface)', padding: '16px', borderRadius: '8px', border: '1px solid var(--slate)'}}>
+                    <code>stellar keys generate alice --network testnet --fund</code>
+                    <code>npm run contract:build</code>
+                    <code>STELLAR_CONTRACT_ALIAS=eco_mania npm run contract:deploy</code>
+                    <code>npm run export:frontend</code>
+                  </div>
+                </Section>
+              ) : null}
+
+              <div className="dashboard-grid" style={{marginTop: 0}}>
+                <div className="col-span-6">
+                  <Section eyebrow="Target" title="Rebalance the weekly goal">
+                    <form className="form-grid" onSubmit={handleGoalSubmit} style={{gridTemplateColumns: '1fr', gap: '16px'}}>
+                      <label>
+                        <span>New weekly target</span>
+                        <input
+                          type="number"
+                          min="1"
+                          max="500"
+                          step="1"
+                          value={goalForm}
+                          onChange={(event) => setGoalForm(event.target.value)}
+                        />
+                      </label>
+                      <button className="button button-secondary" type="submit" disabled={anyMutationPending || !readyForWrites || !dashboard}>
+                        {updateGoalMutation.isPending ? "Updating..." : "Update goal"}
+                      </button>
+                    </form>
+                  </Section>
+                </div>
+                <div className="col-span-6">
+                  <Section eyebrow="How it works" title="A compact climate loop">
+                    <ol style={{color: 'var(--on-surface-variant)', fontSize: '14px', paddingLeft: '20px', margin: 0, display: 'flex', flexDirection: 'column', gap: '12px'}}>
+                      <li>Connect Freighter on Stellar Testnet.</li>
+                      <li>Create an eco profile and weekly target.</li>
+                      <li>Log daily sustainability actions.</li>
+                      <li>Watch streaks, weekly progress, and contract events update.</li>
+                    </ol>
+                  </Section>
+                </div>
+              </div>
+            </>
+          )}
+
+        </div>
       </div>
     </main>
   );
