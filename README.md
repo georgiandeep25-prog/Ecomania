@@ -32,8 +32,8 @@ Ecomania keeps the original full-stack Soroban + React architecture and converts
 - CI/CD pipeline screenshot: [ci cd ss.png](./ci%20cd%20ss.png)
 - Contract address: `CC3I3RHEQ6OOHYWYXUPUUGFOU4MRJEGEIFULJ4UJ3EUE5FATDBAHQ3TM`
 - Contract deployment transaction hash: `4d47c7f0ecdd2c0f0ce379c2386690acfc2f945b18a0c1f1ccda0b1dce19c754`
-- Inter-contract calls: not used; Ecomania is a single Soroban contract.
-- Token or pool address: not applicable; no custom token or liquidity pool was deployed.
+- Inter-contract calls: Used. The `eco_reward` contract calls `Ecomania` via `get_dashboard` to issue reward points when weekly goals are reached.
+- Token or pool address: `eco_reward` acts as a custom reward system.
 
  ## CI/CD
 
@@ -69,7 +69,8 @@ https://drive.google.com/file/d/1fyh44vwBPg8KkTM3u7AbpuhR0Jc8XqEj/view?usp=shari
 ## Architecture
 
 ```text
-contracts/eco_mania/        Soroban smart contract
+contracts/eco_mania/        Soroban smart contract for tracking
+contracts/eco_reward/       Soroban smart contract for rewards (Inter-contract calls)
 frontend/                   React + Vite frontend
 frontend/src/lib/           Contract client helpers and event normalization
 scripts/                    Stellar deploy and frontend config export scripts
