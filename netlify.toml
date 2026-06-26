@@ -1,0 +1,13 @@
+[build]
+  # The command Netlify will run to build your project
+  command = "npm run build:frontend"
+  
+  # The directory containing the built assets (Vite defaults to dist inside the frontend dir)
+  publish = "frontend/dist"
+
+# Single Page Application (SPA) redirect rule
+# This ensures that if you refresh on a sub-route (if added later), Netlify serves index.html
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
