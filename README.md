@@ -45,18 +45,18 @@ Ecomania was meticulously architected to satisfy all hackathon/project criteria:
 ## 📸 Project Screenshots
 
 ### Desktop Impact Console
-![Ecomania desktop impact console 1](./sub%20assets/ui1.png)
+![Ecomania desktop impact console 1](./sub_assets/ui1.png)
 
-![Ecomania desktop impact console 2](./sub%20assets/ui2.png)
+![Ecomania desktop impact console 2](./sub_assets/ui2.png)
 
 ### Mobile Responsive View
-![Ecomania mobile responsive view](./sub%20assets/mobui.png)
+![Ecomania mobile responsive view](./sub_assets/mobui.png)
 
 ### GitHub Actions CI/CD Pipeline
-![Ecomania CI/CD workflow screenshot](./sub%20assets/cicd.png)
+![Ecomania CI/CD workflow screenshot](./sub_assets/cicd.png)
 
 ### Contract & Frontend Test Verification
-![Ecomania test verification](./sub%20assets/test.png)
+![Ecomania test verification](./sub_assets/test.png)
 
 ---
 
