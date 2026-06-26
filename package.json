@@ -16,7 +16,7 @@
     "build:frontend": "npm run export:frontend && npm --workspace frontend run build",
     "build": "npm run contract:build && npm run export:frontend && npm --workspace frontend run build",
     "lint": "npm --workspace frontend run lint",
-    "deploy:frontend": "npx --yes vercel@latest deploy --prod --yes"
+    "deploy:frontend": "npx --yes netlify-cli deploy --prod --build"
   },
   "devDependencies": {
     "dotenv": "^16.4.5"
